@@ -10,9 +10,11 @@
     <header>
         <nav class="navbar">
             <div class="nav-container">
-                <a href="../index.html" class="logo">
-                    <span>SuperTools</span>
-                </a>
+                <div class="logo">
+                    <a href="../index.html" style="color: white; text-decoration: none;">
+                        <span>🛠️ SuperTools</span>
+                    </a>
+                </div>
                 <div class="nav-menu">
                     <a href="../index.html" class="nav-link">Home</a>
                     <a href="../index.html#tools" class="nav-link">Tools</a>
@@ -21,46 +23,36 @@
         </nav>
     </header>
 
-    <main>
-        <section class="tool-page">
-            <div class="container">
-                <h1>Temp Email Generator</h1>
-                <p>Create temporary email addresses for your signup needs</p>
-                
-                <div class="tool-interface">
-                    <button onclick="generateEmail()" class="btn btn-primary">
-                        Generate Email
-                    </button>
-                    
-                    <div id="email-result" class="result-box"></div>
-                </div>
+    <main style="max-width: 800px; margin: 2rem auto; padding: 0 2rem;">
+        <h1>Temp Email Generator</h1>
+        <p>Create temporary email addresses for your online activities. No registration required.</p>
+        
+        <div class="tool-card" style="margin: 2rem 0;">
+            <h2>Generate Temporary Email</h2>
+            <div style="margin: 1.5rem 0;">
+                <button id="generateEmail" class="tool-btn">Generate Email Address</button>
             </div>
-        </section>
+            <div id="emailResult" style="font-size: 1.2rem; margin: 1rem 0; padding: 1rem; background: #f8f9fa; border-radius: 5px; display: none;">
+                Your temporary email: <strong id="generatedEmail"></strong>
+            </div>
+            <p><small>This email will be active for 1 hour. Refresh the page to generate a new one.</small></p>
+        </div>
     </main>
 
-    <script>
-        function generateEmail() {
-            const domains = ['1secmail.com', 'temp-mail.org', 'guerrillamail.com'];
-            const randomDomain = domains[Math.floor(Math.random() * domains.length)];
-            const username = Math.random().toString(36).substring(2, 10);
-            const email = `${username}@${randomDomain}`;
-            
-            const resultBox = document.getElementById('email-result');
-            resultBox.innerHTML = `
-                <h3>Your Temporary Email:</h3>
-                <p class="email-address">${email}</p>
-                <button onclick="copyToClipboard('${email}')" class="btn">
-                    Copy to Clipboard
-                </button>
-                <p class="note">This email will be active for 24 hours</p>
-            `;
-        }
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 SuperTools. All rights reserved.</p>
+        </div>
+    </footer>
 
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                alert('Copied to clipboard: ' + text);
-            });
-        }
+    <script>
+        document.getElementById('generateEmail').addEventListener('click', function() {
+            const randomId = Math.random().toString(36).substring(2, 10);
+            const email = `${randomId}@tempmail.supertools.com`;
+            
+            document.getElementById('generatedEmail').textContent = email;
+            document.getElementById('emailResult').style.display = 'block';
+        });
     </script>
 </body>
-  </html>
+</html>
