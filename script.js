@@ -1,60 +1,79 @@
-// Main JavaScript for SuperTools Website
+// SuperTools - Main JavaScript File
 
-// Mobile menu functionality
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('SuperTools website loaded successfully!');
+    console.log('SuperTools loaded successfully!');
     
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+        anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
+                
+                // Update URL hash without scrolling
+                history.pushState(null, null, targetId);
             }
         });
     });
-
-    // Add animation to tool cards
-    const toolCards = document.querySelectorAll('.tool-card');
-    toolCards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-        card.classList.add('fade-in');
-    });
-
-    // Example function for future tool implementations
-    window.generateTempEmail = function() {
-        const domains = ['1secmail.com', 'temp-mail.org', 'guerrillamail.com'];
-        const randomDomain = domains[Math.floor(Math.random() * domains.length)];
-        const username = Math.random().toString(36).substring(2, 10);
-        return `${username}@${randomDomain}`;
+    
+    // Add animation to tool cards on scroll
+    const animateOnScroll = function() {
+        const toolCards = document.querySelectorAll('.tool-card');
+        
+        toolCards.forEach(card => {
+            const cardPosition = card.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.3;
+            
+            if (cardPosition < screenPosition) {
+                card.style.opacity = 1;
+                card.style.transform = 'translateY(0)';
+            }
+        });
     };
-
-    // Console greeting
-    console.log('%c🚀 SuperTools - All Your Tools in One Place!', 
-        'color: #2563eb; font-size: 16px; font-weight: bold;');
-});
-
-// Utility functions
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        alert('Copied to clipboard: ' + text);
-    }).catch(err => {
-        console.error('Failed to copy: ', err);
+    
+    // Initialize card animation styles
+    const toolCards = document.querySelectorAll('.tool-card');
+    toolCards.forEach(card => {
+        card.style.opacity = 0;
+        card.style.transform = 'translateY(50px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     });
-}
-
-// Theme switcher (for future implementation)
-function toggleTheme() {
-    const body = document.body;
-    body.classList.toggle('dark-theme');
-    localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
-}
-
-// Check saved theme preference
-if (localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark-theme');
-      }
+    
+    // Run animation on scroll and on load
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+    
+    // Simple counter animation for the hero section
+    const counterAnimation = function() {
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+        
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            const increment = target / speed;
+            
+            if (count < target) {
+                counter.innerText = Math.ceil(count + increment);
+                setTimeout(counterAnimation, 1);
+            } else {
+                counter.innerText = target;
+            }
+        });
+    };
+    
+    // Check if counters exist on the page
+    if (document.querySelector('.counter')) {
+        counterAnimation();
+    }
+    
+    // Mobile menu toggle (if needed in the future)
+    console.log('All JavaScript functionality loaded!');
+});
