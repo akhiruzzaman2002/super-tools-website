@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Downloader - SuperTools</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="../index.html" style="color: white; text-decoration: none;">
+                        <span>🛠️ SuperTools</span>
+                    </a>
+                </div>
+                <div class="nav-menu">
+                    <a href="../index.html" class="nav-link">Home</a>
+                    <a href="../index.html#tools" class="nav-link">Tools</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main style="max-width: 800px; margin: 2rem auto; padding: 0 2rem;">
+        <h1>Video Downloader</h1>
+        <p>Download videos from various platforms. Paste the video URL below.</p>
+        
+        <div class="tool-card" style="margin: 2rem 0;">
+            <h2>Download Video</h2>
+            <div style="margin: 1.5rem 0;">
+                <input type="text" id="videoUrl" placeholder="Paste video URL here" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 1rem;">
+                <button id="downloadBtn" class="tool-btn">Download Video</button>
+            </div>
+            <div id="downloadResult" style="display: none; padding: 1rem; background: #e8f5e9; border-radius: 5px; margin-top: 1rem;">
+                <p>Your download will start shortly. If not, <a href="#" id="directLink">click here</a>.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 SuperTools. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            const url = document.getElementById('videoUrl').value;
+            if (!url) {
+                alert('Please enter a video URL');
+                return;
+            }
+            
+            document.getElementById('downloadResult').style.display = 'block';
+            document.getElementById('directLink').href = url;
+        });
+    </script>
+</body>
+</html>
