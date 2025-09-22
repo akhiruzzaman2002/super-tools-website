@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temp Email Generator - SuperTools</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="../index.html" class="logo">
+                    <span>SuperTools</span>
+                </a>
+                <div class="nav-menu">
+                    <a href="../index.html" class="nav-link">Home</a>
+                    <a href="../index.html#tools" class="nav-link">Tools</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="tool-page">
+            <div class="container">
+                <h1>Temp Email Generator</h1>
+                <p>Create temporary email addresses for your signup needs</p>
+                
+                <div class="tool-interface">
+                    <button onclick="generateEmail()" class="btn btn-primary">
+                        Generate Email
+                    </button>
+                    
+                    <div id="email-result" class="result-box"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function generateEmail() {
+            const domains = ['1secmail.com', 'temp-mail.org', 'guerrillamail.com'];
+            const randomDomain = domains[Math.floor(Math.random() * domains.length)];
+            const username = Math.random().toString(36).substring(2, 10);
+            const email = `${username}@${randomDomain}`;
+            
+            const resultBox = document.getElementById('email-result');
+            resultBox.innerHTML = `
+                <h3>Your Temporary Email:</h3>
+                <p class="email-address">${email}</p>
+                <button onclick="copyToClipboard('${email}')" class="btn">
+                    Copy to Clipboard
+                </button>
+                <p class="note">This email will be active for 24 hours</p>
+            `;
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard: ' + text);
+            });
+        }
+    </script>
+</body>
+  </html>
